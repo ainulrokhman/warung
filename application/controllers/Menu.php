@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Menu extends CI_Controller
 {
+    protected $MENU_NAME = "Daftar Menu";
     public function __construct()
     {
         parent::__construct();
@@ -13,6 +14,7 @@ class Menu extends CI_Controller
     public function index()
     {
         $data['menu'] = $this->Model_Menu->get_all()->result();
+        $data['menu_name'] = $this->MENU_NAME;
         template_view('menu/index', $data);
     }
 
@@ -45,6 +47,7 @@ class Menu extends CI_Controller
             return;
         }
         $data['kategori'] = $this->Model_Kategori->get_all()->result();
+        $data['menu_name'] = $this->MENU_NAME;
         template_view('menu/tambah', $data);
     }
 
@@ -71,6 +74,7 @@ class Menu extends CI_Controller
         }
         $data = $this->Model_Menu->get_by_id($id)->row_array();
         $data['kategori'] = $this->Model_Kategori->get_all()->result();
+        $data['menu_name'] = $this->MENU_NAME;
         template_view('menu/ubah', $data);
     }
 }

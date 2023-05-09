@@ -33,8 +33,6 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="<?= base_url('kategori'); ?>">Data Kategori Menu</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('menu'); ?>">Data Menu</a></li>
-                            <li><a class="dropdown-item" href="#">Data Harga</a></li>
-                            <li><a class="dropdown-item" href="#">Data Stok</a></li>
                             <li><a class="dropdown-item" href="#">Data User</a></li>
                         </ul>
                     </li>
@@ -58,6 +56,9 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="<?= base_url('kasir'); ?>">Kasir</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto me-lg-4">
                     <li class="nav-item dropdown">
@@ -79,3 +80,13 @@
         </div>
     </nav>
     <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3><?= $menu_name; ?></h3>
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><?= $menu_name; ?></li>
+                </ol>
+            </nav>
+        </div>
+        <hr>

@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Kategori extends CI_Controller
 {
+    protected $MENU_NAME = "Daftar Kategori";
     public function __construct()
     {
         parent::__construct();
@@ -12,6 +13,7 @@ class Kategori extends CI_Controller
     public function index()
     {
         $data['kategori'] = $this->Model_Kategori->get_all()->result();
+        $data['menu_name'] = $this->MENU_NAME;
         template_view('kategori/index', $data);
     }
 
@@ -34,7 +36,9 @@ class Kategori extends CI_Controller
             redirect(base_url('kategori'));
             return;
         }
-        template_view('kategori/tambah');
+
+        $data['menu_name'] = $this->MENU_NAME;
+        template_view('kategori/tambah', $data);
     }
 
     public function ubah($id)
@@ -50,6 +54,7 @@ class Kategori extends CI_Controller
             return;
         }
         $data = $this->Model_Kategori->get_by_id($id)->row_array();
+        $data['menu_name'] = $this->MENU_NAME;
         template_view('kategori/ubah', $data);
     }
 }

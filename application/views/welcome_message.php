@@ -1,14 +1,3 @@
-<div class="d-flex justify-content-between align-items-center">
-  <h3>Dashboard</h3>
-  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-    </ol>
-  </nav>
-</div>
-<hr>
-
 <div class="row">
   <div class="col">
     <div class="card text-center text-white bg-primary mb-3" style="max-width: 18rem;">

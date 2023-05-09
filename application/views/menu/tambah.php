@@ -1,14 +1,3 @@
-<div class="d-flex justify-content-between align-items-center">
-    <h3>Daftar Kategori</h3>
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Daftar Menu</li>
-        </ol>
-    </nav>
-</div>
-<hr>
-
 <form action="" method="post">
     <div class="mb-3 row">
         <label for="nama" class="col-sm-2 col-form-label">Nama Menu</label>

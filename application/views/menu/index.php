@@ -1,14 +1,3 @@
-<div class="d-flex justify-content-between align-items-center">
-    <h3>Daftar Menu</h3>
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Daftar Menu</li>
-        </ol>
-    </nav>
-</div>
-<hr>
-
 <a href="<?= base_url('menu/tambah'); ?>" class="btn btn-primary text-decoration-none">Tambah Menu</a>
 
 <div class="mt-3"><?php echo $this->session->flashdata('notify'); ?></div>

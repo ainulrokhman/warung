@@ -19,10 +19,12 @@ class Welcome extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	protected $MENU_NAME = "Dashboard";
 	public function index()
 	{
 		$this->load->model('Model_Menu');
 		$data['menu'] = $this->Model_Menu->get_all()->num_rows();
+		$data['menu_name'] = $this->MENU_NAME;
 		template_view('welcome_message', $data);
 	}
 }
