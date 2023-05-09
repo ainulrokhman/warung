@@ -8,6 +8,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/bootstrap-5.1.3/css/bootstrap.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
 
     <title>Hello, world!</title>
 </head>
@@ -16,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url(); ?>">Navbar</a>
+            <a class="navbar-brand" href="<?= base_url(); ?>">WARUNG SEDERHANA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,8 +31,8 @@
                             Master Data
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Data Kategori Menu</a></li>
-                            <li><a class="dropdown-item" href="#">Data Menu</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kategori'); ?>">Data Kategori Menu</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('menu'); ?>">Data Menu</a></li>
                             <li><a class="dropdown-item" href="#">Data Harga</a></li>
                             <li><a class="dropdown-item" href="#">Data Stok</a></li>
                             <li><a class="dropdown-item" href="#">Data User</a></li>

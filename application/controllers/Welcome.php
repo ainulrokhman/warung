@@ -21,6 +21,8 @@ class Welcome extends CI_Controller
 	 */
 	public function index()
 	{
-		template_view('welcome_message');
+		$this->load->model('Model_Menu');
+		$data['menu'] = $this->Model_Menu->get_all()->num_rows();
+		template_view('welcome_message', $data);
 	}
 }
