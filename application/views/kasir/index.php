@@ -24,69 +24,70 @@
         </table>
     </div>
     <div class="col border p-3">
-        <div class="mb-3 row">
-            <label for="pembeli" class="col-sm-2 col-form-label">Pembeli</label>
-            <div class="col-sm-10">
-                <select class="form-control" id="pembeli" name="pembeli">
-                    <option selected value="-1">Umum</option>
-                    <option value="0">Member Baru</option>
-                    <option value="2">Member 1</option>
-                    <option value="3">Member 2</option>
-                    <option value="4">Member 3</option>
-                </select>
-            </div>
-        </div>
-        <div id="data-pembeli" style="display: none;">
+        <form action="" method="post">
             <div class="mb-3 row">
-                <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                <label for="pembeli" class="col-sm-2 col-form-label">Pembeli</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="nama" name="nama">
+                    <select class="form-control" id="pembeli" name="pembeli">
+                        <option selected value="-1">Umum</option>
+                        <option value="0">Member Baru</option>
+                        <option value="2">Member 1</option>
+                        <option value="3">Member 2</option>
+                        <option value="4">Member 3</option>
+                    </select>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="hp" class="col-sm-2 col-form-label">No HP</label>
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="hp" name="hp">
+            <div id="data-pembeli" style="display: none;">
+                <div class="mb-3 row">
+                    <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="nama" name="nama">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="hp" class="col-sm-2 col-form-label">No HP</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="hp" name="hp">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
+                    <div class="col-sm-10">
+                        <textarea name="alamat" id="alamat" class="form-control" rows="3"></textarea>
+                    </div>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
-                <div class="col-sm-10">
-                    <textarea name="alamat" id="alamat" class="form-control" rows="3"></textarea>
+            <hr class="mt-3">
+            <div class="content">
+            </div>
+            <div class="row">
+                <div class="col"><b>Sub Total</b></div>
+                <!-- <div class="col text-end total">0</div> -->
+                <div class="col">
+                    <input type="text" class="form-control-plaintext text-end total" name="total" value="<?= formatRupiah(0); ?>">
                 </div>
             </div>
-        </div>
-        <hr class="mt-3">
-        <!-- <div class="row">
-            <div class="col">Menu</div>
-            <div class="col">Quantity</div>
-            <div class="col text-end">Total</div>
             <hr>
-        </div> -->
-        <div class="content">
-        </div>
-        <div class="row">
-            <div class="col"><b>Sub Total</b></div>
-            <div class="col text-end total">0</div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col"><b>Jml. Bayar</b></div>
-            <div class="col-4 text-end">
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon1">Rp</span>
-                    <input type="text" class="form-control" id="bayar" name="bayar">
+            <div class="row">
+                <div class="col"><b>Jml. Bayar</b></div>
+                <div class="col-4 text-end">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">Rp</span>
+                        <input type="text" class="form-control" id="bayar" name="bayar">
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col"><b>Kembali</b></div>
-            <div class="col text-end" id="kembali"><?= formatRupiah(0); ?></div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div class="btn btn-primary form-control mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Bayar</div>
-        </div>
+            <hr>
+            <div class="row">
+                <div class="col"><b>Kembali</b></div>
+                <div class="col">
+                    <input type="text" class="form-control-plaintext text-end" name="kembali" id="kembali" value="<?= formatRupiah(0); ?>">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary form-control mt-3">Bayar</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -116,6 +117,18 @@
     $(document).ready(function() {
         $('#example').DataTable();
     });
+    $(document).on('submit', 'form', function() {
+        const qty = $('.qty').val()
+        if (!qty) {
+            alert("Masukan menu pesanan terlebih dahulu")
+            return false
+        }
+
+        // const bayar = $('#kembali').val()
+        // console.log(bayar);
+        // console.log(unformatThousands(bayar));
+        return false;
+    });
 
     var dataTransaksi = {}
 
@@ -128,21 +141,28 @@
         }
         pembeli.style.display = "none"
     })
-    $('#bayar').on('change', function() {
-        // let value = formatThousands($(this).val())
+    $('#bayar').on('input', function() {
         let value = unformatThousands($(this).val())
         $(this).val(formatThousands(value))
         updateTotal()
     })
 
-    var menus = Array();
-    var subTotal = Array();
-    $(document).on('change', '.qty', function() {
+    const subTotal = Array();
+    $(document).on('click', '.hapus', function() {
+        $(this).parent().parent().remove()
+        var slug = $(this).data("slug")
+        delete subTotal[slug]
+
+        $('#bayar').val(formatThousands(total()))
+        updateTotal()
+    })
+
+    $(document).on('input', '.qty', function() {
         var slug = $(this).data('slug');
         var harga = $(this).data('harga');
         var stok = $(this).data('stok');
         var qty = $(this).val()
-        if (qty <= 0) {
+        if (qty < 0) {
             $(this).val(1)
             updateHarga(1, harga, slug)
         } else if (qty <= stok) {
@@ -151,6 +171,8 @@
             $(this).val(stok)
             updateHarga(stok, harga, slug)
         }
+
+        $('#bayar').val(formatThousands(total()))
         updateTotal()
     })
     $('.menu').on('click', function() {
@@ -164,9 +186,8 @@
             },
             success: function(response) {
                 let data = response['data']
-                if (menus.indexOf(response['slug']) == -1) {
+                if (!subTotal[response['slug']]) {
                     $('.content').append(response['html'])
-                    menus.push(response['slug'])
                     subTotal[response['slug']] = parseInt(response['data']['harga'])
                 } else {
                     var qty = parseInt($('.' + response['slug']).val())
@@ -176,9 +197,8 @@
                         updateHarga(new_qty, response['data']['harga'], response['slug'])
                     }
                 }
+
                 $('#bayar').val(formatThousands(total()))
-
-
                 updateTotal()
             }
         })
@@ -199,8 +219,8 @@
         let sum = total()
         let kembali = bayar - sum
 
-        $("#kembali").html(formatThousands(kembali))
-        $('.total').html(formatRupiah(sum))
+        $("#kembali").val(formatRupiah(kembali))
+        $('.total').val(formatRupiah(sum))
     }
 
     function updateHarga(qty, harga, className) {
@@ -222,7 +242,20 @@
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    function unformatThousands(formattedNumber) {
-        return formattedNumber.replace(/\./g, "").replace(",", ".");
+    // function unformatThousands(formattedNumber) {
+    //     // return formattedNumber.replace(/\./g, "").replace(",", ".", "Rp");
+    //     // const unformattedValue = formattedNumber.replace(/[,.]/g, '');
+    //     // return parseFloat(unformattedValue);
+    //     return formattedNumber.replace(/\D/g, '');
+    // }
+
+    function unformatThousands(rupiah) {
+        const regex = /-?([\d.,]+)/;
+        const matches = rupiah.match(regex);
+        if (matches && matches.length > 0) {
+            const formattedNumber = matches[0].replace(/[,.]/g, '');
+            return parseFloat(formattedNumber);
+        }
+        return NaN;
     }
 </script>

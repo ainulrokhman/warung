@@ -12,6 +12,10 @@ class Kasir extends CI_Controller
     }
     public function index()
     {
+        if ($this->input->method() == "post") {
+            echo json_encode($this->input->post());
+            return;
+        }
         $data['menu_name'] = $this->MENU_NAME;
         $data['menu'] = $this->Model_Menu->get_all()->result();
         template_view('kasir/index', $data);
