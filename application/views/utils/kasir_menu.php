@@ -3,13 +3,13 @@
     <div class="col">
         <?= $nama; ?>
         <br>
-        <b><?= $harga; ?></b> stok <?= $stok; ?>
+        <i><?= formatRupiah($harga); ?></i> stok <?= $stok; ?>
     </div>
-    <div class="col">
+    <div class="col-2">
         <input data-stok="<?= $stok; ?>" data-slug="<?= $slug; ?>" data-harga="<?= $harga; ?>" class="form-control qty <?= $slug; ?>" type="number" name="qty" value="1" max="<?= $stok; ?>" min="1">
     </div>
-    <div class="col text-end harga-<?= $slug; ?>">
-        <?= $harga; ?>
+    <div class="col-3 text-end harga-<?= $slug; ?>">
+        <?= formatRupiah($harga); ?>
     </div>
     <hr>
 </div>
