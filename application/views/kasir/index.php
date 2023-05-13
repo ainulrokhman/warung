@@ -41,7 +41,7 @@
                 <div class="mb-3 row">
                     <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nama" name="nama">
+                        <input required disabled type="text" class="form-control" id="nama" name="nama">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -115,7 +115,11 @@
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            order: [
+                [0, 'asc']
+            ],
+        });
     });
     $(document).on('submit', 'form', function() {
         const qty = $('.qty').val()
@@ -124,25 +128,29 @@
             return false
         }
 
-        // const bayar = $('#kembali').val()
-        // console.log(bayar);
-        // console.log(unformatThousands(bayar));
-        return false;
+        const kembali = $('#kembali').val()
+        const pembeli = $('#pembeli').val()
+        if (kembali.includes("-") && pembeli.includes("-")) {
+            alert("Pilih pembeli untuk pembayaran yang kurang")
+            return false;
+        }
     });
 
-    var dataTransaksi = {}
+    let dataTransaksi = {}
 
     $('#pembeli').on('change', function() {
-        let value = $(this).val()
-        let pembeli = document.getElementById("data-pembeli")
+        const value = $(this).val()
+        const pembeli = document.getElementById("data-pembeli")
         if (value == 0) {
             pembeli.style.display = "block"
+            $("#nama").prop("disabled", false)
             return
         }
+        $("#nama").prop("disabled", true)
         pembeli.style.display = "none"
     })
     $('#bayar').on('input', function() {
-        let value = unformatThousands($(this).val())
+        const value = unformatThousands($(this).val())
         $(this).val(formatThousands(value))
         updateTotal()
     })
@@ -150,7 +158,7 @@
     const subTotal = Array();
     $(document).on('click', '.hapus', function() {
         $(this).parent().parent().remove()
-        var slug = $(this).data("slug")
+        const slug = $(this).data("slug")
         delete subTotal[slug]
 
         $('#bayar').val(formatThousands(total()))
@@ -158,10 +166,10 @@
     })
 
     $(document).on('input', '.qty', function() {
-        var slug = $(this).data('slug');
-        var harga = $(this).data('harga');
-        var stok = $(this).data('stok');
-        var qty = $(this).val()
+        const slug = $(this).data('slug');
+        const harga = $(this).data('harga');
+        const stok = $(this).data('stok');
+        const qty = $(this).val()
         if (qty < 0) {
             $(this).val(1)
             updateHarga(1, harga, slug)
@@ -176,7 +184,7 @@
         updateTotal()
     })
     $('.menu').on('click', function() {
-        var id = $(this).data('id')
+        const id = $(this).data('id')
         $.ajax({
             type: "POST",
             url: '<?= base_url('kasir/menu'); ?>',
@@ -190,8 +198,8 @@
                     $('.content').append(response['html'])
                     subTotal[response['slug']] = parseInt(response['data']['harga'])
                 } else {
-                    var qty = parseInt($('.' + response['slug']).val())
-                    var new_qty = qty + 1
+                    const qty = parseInt($('.' + response['slug']).val())
+                    let new_qty = qty + 1
                     if (new_qty <= response['data']['stok']) {
                         $('.' + response['slug']).val(new_qty)
                         updateHarga(new_qty, response['data']['harga'], response['slug'])
@@ -224,7 +232,7 @@
     }
 
     function updateHarga(qty, harga, className) {
-        var new_harga = harga * qty
+        let new_harga = harga * qty
         subTotal[className] = new_harga
         $('.harga-' + className).html(formatRupiah(new_harga))
     }

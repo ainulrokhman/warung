@@ -13,7 +13,33 @@ class Kasir extends CI_Controller
     public function index()
     {
         if ($this->input->method() == "post") {
-            echo json_encode($this->input->post());
+            $pembeli = $this->input->post('pembeli', true);
+            $nama = $this->input->post('nama', true);
+            $hp = $this->input->post('hp', true);
+            $alamat = $this->input->post('alamat', true);
+            $id = $this->input->post('id', true);
+            $qty = $this->input->post('qty', true);
+            $total = $this->input->post('total', true);
+            $bayar = $this->input->post('bayar', true);
+            $kembali = $this->input->post('kembali', true);
+
+            $data = [
+                "pembeli" => $pembeli,
+                "nama" => $nama,
+                "hp" => $hp,
+                "alamat" => $alamat,
+                "total" => $total,
+                "bayar" => $bayar,
+                "kembali" => $kembali,
+            ];
+            for ($i = 0; $i < sizeof($id); $i++) {
+                $data['pesanan'][] = [
+                    'id' => $id[$i],
+                    'qty' => $qty[$i],
+                ];
+            }
+
+            echo json_encode($data);
             return;
         }
         $data['menu_name'] = $this->MENU_NAME;
