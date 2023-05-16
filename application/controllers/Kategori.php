@@ -7,20 +7,20 @@ class Kategori extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Model_Kategori');
+        $this->load->model('ModelKategori');
     }
 
     public function index()
     {
-        $data['kategori'] = $this->Model_Kategori->get_all()->result();
+        $data['kategori'] = $this->ModelKategori->get_all()->result();
         $data['menu_name'] = $this->MENU_NAME;
         template_view('kategori/index', $data);
     }
 
     public function hapus($id)
     {
-        $hapus = $this->Model_Kategori->delete($id);
-        $alert = $this->load->view('utils/alert', ['status' => $hapus, "action" => "hapus"], true);
+        $hapus = $this->ModelKategori->delete($id);
+        $alert = $this->load->view('utils/alert', ['status' => $hapus, "msg" => "Data berhasil dihapus"], true);
         $this->session->set_flashdata('notify', $alert);
         redirect(base_url('kategori'));
     }
@@ -30,8 +30,8 @@ class Kategori extends CI_Controller
         if ($this->input->method() == "post") {
             $nama = $this->input->post('nama', true);
             $data = ['nama' => $nama];
-            $insert = $this->Model_Kategori->add($data);
-            $alert = $this->load->view('utils/alert', ['status' => $insert, "action" => "tambahkan"], true);
+            $insert = $this->ModelKategori->add($data);
+            $alert = $this->load->view('utils/alert', ['status' => $insert, "msg" => "Data berhasil ditambahkan"], true);
             $this->session->set_flashdata('notify', $alert);
             redirect(base_url('kategori'));
             return;
@@ -47,13 +47,13 @@ class Kategori extends CI_Controller
             $id = $this->input->post('id', true);
             $nama = $this->input->post('nama', true);
             $data = ['nama' => $nama, 'id' => $id];
-            $insert = $this->Model_Kategori->update($data);
-            $alert = $this->load->view('utils/alert', ['status' => $insert, "action" => "ubah"], true);
+            $insert = $this->ModelKategori->update($data);
+            $alert = $this->load->view('utils/alert', ['status' => $insert, "msg" => "Data berhasil diubah"], true);
             $this->session->set_flashdata('notify', $alert);
             redirect(base_url('kategori'));
             return;
         }
-        $data = $this->Model_Kategori->get_by_id($id)->row_array();
+        $data = $this->ModelKategori->get_by_id($id)->row_array();
         $data['menu_name'] = $this->MENU_NAME;
         template_view('kategori/ubah', $data);
     }

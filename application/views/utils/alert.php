@@ -12,7 +12,7 @@
             <use xlink:href="#check-circle-fill" />
         </svg>
         <div>
-            Data berhasil di<?= $action; ?>
+            <?= $msg; ?>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

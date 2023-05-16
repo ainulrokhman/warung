@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Model_Menu extends CI_Model
+class ModelKategori extends CI_Model
 {
-    protected $TABLE = "menu";
+    protected $TABLE = "kategori";
     public function get_all()
     {
         return $this->db->get($this->TABLE);

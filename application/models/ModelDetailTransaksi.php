@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Model_Kategori extends CI_Model
+class ModelDetailTransaksi extends CI_Model
 {
-    protected $TABLE = "kategori";
+    protected $TABLE = "detail_transaksi";
     public function get_all()
     {
         return $this->db->get($this->TABLE);
@@ -14,7 +14,7 @@ class Model_Kategori extends CI_Model
     }
     public function add($data)
     {
-        return $this->db->insert($this->TABLE, $data);
+        return $this->db->insert_batch($this->TABLE, $data);
     }
     public function update($data)
     {
@@ -22,6 +22,6 @@ class Model_Kategori extends CI_Model
     }
     public function get_by_id($id)
     {
-        return $this->db->get_where($this->TABLE, ["id" => $id]);
+        return $this->db->get_where($this->TABLE, ["id_transaksi" => $id]);
     }
 }

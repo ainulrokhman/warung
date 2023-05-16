@@ -33,7 +33,7 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="<?= base_url('kategori'); ?>">Data Kategori Menu</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('menu'); ?>">Data Menu</a></li>
-                            <li><a class="dropdown-item" href="#">Data User</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url("member"); ?>">Data Member</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

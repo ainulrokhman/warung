@@ -1,4 +1,4 @@
-<a href="<?= base_url('menu/tambah'); ?>" class="btn btn-primary text-decoration-none">Tambah Menu</a>
+<a href="<?= base_url('member/tambah'); ?>" class="btn btn-primary text-decoration-none">Tambah Member</a>
 
 <div class="mt-3"><?php echo $this->session->flashdata('notify'); ?></div>
 <hr>
@@ -6,28 +6,25 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Nama Menu</th>
-            <th>Kategori</th>
-            <th>Stok</th>
-            <th>Harga</th>
+            <th>Nama Member</th>
+            <th>No HP</th>
+            <th>Alamat</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
         <?php $no = 0;
-        foreach ($menu as $m) : ?>
-            <?php $kategori = $this->ModelKategori->get_by_id($m->kategori_id)->row_array(); ?>
+        foreach ($kategori as $k) : ?>
             <tr>
                 <td><?= ++$no; ?></td>
-                <td><?= $m->nama; ?></td>
-                <td><?= $kategori['nama']; ?></td>
-                <td><?= $m->stok; ?></td>
-                <td><?= $m->harga; ?></td>
+                <td><?= $k->nama; ?></td>
+                <td><?= $k->hp; ?></td>
+                <td><?= $k->alamat; ?></td>
                 <td>
-                    <a href="<?= base_url("menu/ubah/$m->id"); ?>" class="text-decoration-none text-white">
+                    <a href="<?= base_url("member/ubah/$k->id"); ?>" class="text-decoration-none text-white">
                         <span class="badge bg-info"><i class="fas fa-edit"></i> Ubah</span>
                     </a>
-                    <a href="<?= base_url("menu/hapus/$m->id"); ?>" onclick='return confirm("Hapus Menu \"<?= $m->nama; ?>\"?")' class="text-decoration-none text-white">
+                    <a href="<?= base_url("member/hapus/$k->id"); ?>" onclick='return confirm("Hapus member \"<?= $k->nama; ?>\"?")' class="text-decoration-none text-white">
                         <span class="badge bg-danger"><i class="fas fa-trash"></i> Hapus</span>
                     </a>
                 </td>

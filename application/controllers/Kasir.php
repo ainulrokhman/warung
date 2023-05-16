@@ -7,8 +7,11 @@ class Kasir extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Model_Kategori');
-        $this->load->model('Model_Menu');
+        $this->load->model('ModelKategori');
+        $this->load->model('ModelMenu');
+        $this->load->model('ModelTransaksi');
+        $this->load->model('ModelDetailTransaksi');
+        $this->load->model('ModelMember');
     }
     public function index()
     {
@@ -21,29 +24,44 @@ class Kasir extends CI_Controller
             $qty = $this->input->post('qty', true);
             $total = $this->input->post('total', true);
             $bayar = $this->input->post('bayar', true);
-            $kembali = $this->input->post('kembali', true);
+            $kembali = getNumberFromRupiah("Rp $bayar") - getNumberFromRupiah($total);
 
-            $data = [
-                "pembeli" => $pembeli,
-                "nama" => $nama,
-                "hp" => $hp,
-                "alamat" => $alamat,
-                "total" => $total,
-                "bayar" => $bayar,
+            $data['transaksi'] = [
+                "invoice" => generateInvoice(),
+                "total" => getNumberFromRupiah($total),
+                "bayar" => getNumberFromRupiah("Rp $bayar"),
                 "kembali" => $kembali,
             ];
-            for ($i = 0; $i < sizeof($id); $i++) {
-                $data['pesanan'][] = [
-                    'id' => $id[$i],
-                    'qty' => $qty[$i],
-                ];
+
+            if ($pembeli > 0) {
+                $data['transaksi']['id_member'] = $pembeli;
+            } elseif ($pembeli == 0) {
+                $data['member']['nama'] = $nama;
+                $data['member']['hp'] = $hp;
+                $data['member']['alamat'] = $alamat;
+                $data['transaksi']['id_member'] = $this->ModelMember->add($data['member']);
             }
 
-            echo json_encode($data);
+            $id_transaksi = $this->ModelTransaksi->add($data['transaksi']);
+
+            for ($i = 0; $i < sizeof($id); $i++) {
+                $menu = $this->ModelMenu->get_by_id($id[$i])->row_array();
+                $data['detail_transaksi'][$i]['id_transaksi'] = $id_transaksi;
+                $data['detail_transaksi'][$i]['nama_menu'] = $menu['nama'];
+                $data['detail_transaksi'][$i]['harga'] = $menu['harga'];
+                $data['detail_transaksi'][$i]['qty'] = $qty[$i];
+            }
+
+            $insert = $this->ModelDetailTransaksi->add($data['detail_transaksi']);
+            $msg = 'Transaksi tersimpan <a href="#"><i class="fas fa-print text-danger"></i> Print</a>';
+            $alert = $this->load->view('utils/alert', ['status' => $insert, "msg" => $msg], true);
+            $this->session->set_flashdata('notify', $alert);
+            redirect(base_url('kasir'));
             return;
         }
+
         $data['menu_name'] = $this->MENU_NAME;
-        $data['menu'] = $this->Model_Menu->get_all()->result();
+        $data['menu'] = $this->ModelMenu->get_all()->result();
         template_view('kasir/index', $data);
     }
     public function menu()
@@ -51,7 +69,7 @@ class Kasir extends CI_Controller
 
         if ($this->input->method() == "post") {
             $id = $this->input->post('id', true);
-            $data = $this->Model_Menu->get_by_id($id)->row_array();
+            $data = $this->ModelMenu->get_by_id($id)->row_array();
             $html = $this->load->view('utils/kasir_menu', $data, true);
             $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $data['nama'])));
             $result = [

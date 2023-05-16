@@ -1,54 +1,50 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Menu extends CI_Controller
+class Member extends CI_Controller
 {
-    protected $MENU_NAME = "Daftar Menu";
+    protected $MENU_NAME = "Daftar Member";
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('ModelMenu');
-        $this->load->model('ModelKategori');
+        $this->load->model('ModelMember');
     }
 
     public function index()
     {
-        $data['menu'] = $this->ModelMenu->get_all()->result();
+        $data['kategori'] = $this->ModelMember->get_all()->result();
         $data['menu_name'] = $this->MENU_NAME;
-        template_view('menu/index', $data);
+        template_view('member/index', $data);
     }
 
     public function hapus($id)
     {
-        $hapus = $this->ModelMenu->delete($id);
+        $hapus = $this->ModelMember->delete($id);
         $alert = $this->load->view('utils/alert', ['status' => $hapus, "msg" => "Data berhasil dihapus"], true);
         $this->session->set_flashdata('notify', $alert);
-        redirect(base_url('menu'));
+        redirect(base_url('member'));
     }
 
     public function tambah()
     {
         if ($this->input->method() == "post") {
             $nama = $this->input->post('nama', true);
-            $kategori = $this->input->post('kategori', true);
-            $stok = $this->input->post('stok', true);
-            $harga = $this->input->post('harga', true);
+            $hp = $this->input->post('hp', true);
+            $alamat = $this->input->post('alamat', true);
             $data = [
                 'nama' => $nama,
-                'kategori_id' => $kategori,
-                'stok' => $stok,
-                'harga' => $harga,
+                'hp' => $hp,
+                'alamat' => $alamat,
             ];
-            // echo json_encode($data);
-            $insert = $this->ModelMenu->add($data);
+            $insert = $this->ModelMember->add($data);
             $alert = $this->load->view('utils/alert', ['status' => $insert, "msg" => "Data berhasil ditambahkan"], true);
             $this->session->set_flashdata('notify', $alert);
-            redirect(base_url('menu'));
+            redirect(base_url('member'));
             return;
         }
-        $data['kategori'] = $this->ModelKategori->get_all()->result();
+
         $data['menu_name'] = $this->MENU_NAME;
-        template_view('menu/tambah', $data);
+        template_view('member/tambah', $data);
     }
 
     public function ubah($id)
@@ -56,25 +52,22 @@ class Menu extends CI_Controller
         if ($this->input->method() == "post") {
             $id = $this->input->post('id', true);
             $nama = $this->input->post('nama', true);
-            $kategori = $this->input->post('kategori', true);
-            $stok = $this->input->post('stok', true);
-            $harga = $this->input->post('harga', true);
+            $hp = $this->input->post('hp', true);
+            $alamat = $this->input->post('alamat', true);
             $data = [
                 'id' => $id,
                 'nama' => $nama,
-                'kategori_id' => $kategori,
-                'stok' => $stok,
-                'harga' => $harga,
+                'hp' => $hp,
+                'alamat' => $alamat,
             ];
-            $insert = $this->ModelMenu->update($data);
+            $insert = $this->ModelMember->update($data);
             $alert = $this->load->view('utils/alert', ['status' => $insert, "msg" => "Data berhasil diubah"], true);
             $this->session->set_flashdata('notify', $alert);
-            redirect(base_url('menu'));
+            redirect(base_url('member'));
             return;
         }
-        $data = $this->ModelMenu->get_by_id($id)->row_array();
-        $data['kategori'] = $this->ModelKategori->get_all()->result();
+        $data = $this->ModelMember->get_by_id($id)->row_array();
         $data['menu_name'] = $this->MENU_NAME;
-        template_view('menu/ubah', $data);
+        template_view('member/ubah', $data);
     }
 }

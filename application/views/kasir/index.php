@@ -1,3 +1,4 @@
+<div class="mt-3"><?php echo $this->session->flashdata('notify'); ?></div>
 <div class="row">
     <div class="col border p-3">
         <table id="example" class="table">
@@ -10,7 +11,7 @@
             <tbody>
                 <?php
                 foreach ($menu as $m) : ?>
-                    <?php $kategori = $this->Model_Kategori->get_by_id($m->kategori_id)->row_array(); ?>
+                    <?php $kategori = $this->ModelKategori->get_by_id($m->kategori_id)->row_array(); ?>
                     <tr class="menu" data-id="<?= $m->id; ?>">
                         <td>
                             <?= $m->nama; ?>
@@ -238,12 +239,15 @@
     }
 
     function formatRupiah(number) {
-        return number.toLocaleString('id-ID', {
+        const formatNumber = number.toLocaleString('id-ID', {
             style: 'currency',
             currency: 'IDR',
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
         });
+        const replacedNumber = formatNumber.replace(/\u00A0/g, ' ');
+
+        return replacedNumber;
     }
 
     function formatThousands(number) {

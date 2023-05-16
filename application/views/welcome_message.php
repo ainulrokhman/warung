@@ -8,7 +8,7 @@
       <div class="card-footer"><a href="<?= base_url('menu'); ?>" class="text-white">Lihat Selengkapnya <i class="fas fa-arrow-circle-right"></i></a></div>
     </div>
   </div>
-  <div class="col">
+  <!-- <div class="col">
     <div class="card text-center text-white bg-danger mb-3" style="max-width: 18rem;">
       <div class="card-body">
         <p class="card-title fs-1">10</p>
@@ -16,23 +16,23 @@
       </div>
       <div class="card-footer"><a href="#" class="text-white">Lihat Selengkapnya <i class="fas fa-arrow-circle-right"></i></a></div>
     </div>
-  </div>
+  </div> -->
   <div class="col">
     <div class="card text-center text-white bg-success mb-3" style="max-width: 18rem;">
       <div class="card-body">
-        <p class="card-title fs-1">10</p>
-        <p class="card-text">Pesanan Sudah Bayar</p>
+        <p class="card-title fs-1"><?= $member; ?></p>
+        <p class="card-text">Jumlah Member</p>
       </div>
-      <div class="card-footer"><a href="#" class="text-white">Lihat Selengkapnya <i class="fas fa-arrow-circle-right"></i></a></div>
+      <div class="card-footer"><a href="<?= base_url("member"); ?>" class="text-white">Lihat Selengkapnya <i class="fas fa-arrow-circle-right"></i></a></div>
     </div>
   </div>
   <div class="col">
     <div class="card text-center text-white bg-warning mb-3" style="max-width: 18rem;">
       <div class="card-body">
-        <p class="card-title fs-1">10</p>
-        <p class="card-text">Total Pesanan</p>
+        <p class="card-title fs-1"><?= $transaksi; ?></p>
+        <p class="card-text">Jumlah Transaksi</p>
       </div>
-      <div class="card-footer"><a href="#" class="text-white">Lihat Selengkapnya <i class="fas fa-arrow-circle-right"></i></a></div>
+      <div class="card-footer"><a href="<?= base_url("transaksi"); ?>" class="text-white">Lihat Selengkapnya <i class="fas fa-arrow-circle-right"></i></a></div>
     </div>
   </div>
 </div>

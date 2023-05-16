@@ -17,3 +17,27 @@ if (!function_exists('formatRupiah')) {
         return 'Rp ' . number_format($number, 0, ',', '.');
     }
 }
+if (!function_exists('getNumberFromRupiah')) {
+    function getNumberFromRupiah($rupiah)
+    {
+        $regex = '/-?Rp\s?([\d.,]+)/';
+        if (preg_match($regex, $rupiah, $matches)) {
+            $formattedNumber = str_replace(['.', ','], '', $matches[1]);
+            return (float) $formattedNumber;
+        }
+        return null;
+    }
+}
+if (!function_exists('generateInvoice')) {
+    function generateInvoice()
+    {
+        $ci = &get_instance();
+        $prefix = "INV";
+        $counter = $ci->db->get('transaksi')->num_rows() + 1;
+        $padding = 5;
+        $year = null;
+        $year = $year ?? date('Y');
+        $formattedCounter = str_pad($counter, $padding, '0', STR_PAD_LEFT);
+        return $year . '/' . $prefix . '/' . $formattedCounter;
+    }
+}
