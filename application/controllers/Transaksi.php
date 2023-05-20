@@ -15,7 +15,9 @@ class Transaksi extends CI_Controller
     {
         if ($this->input->method() == "post") {
             $id = $this->input->post('id', true);
-            $data = $this->ModelDetailTransaksi->get_by_id($id)->result();
+            $detail_transaksi['data'] = $this->ModelDetailTransaksi->get_by_id($id)->result();
+            $data['transaksi'] = $this->ModelTransaksi->get_by_id($id)->result()[0];
+            $data['detail'] = $this->load->view('utils/detail_menu', $detail_transaksi, true);
             echo json_encode($data);
             return;
         }
